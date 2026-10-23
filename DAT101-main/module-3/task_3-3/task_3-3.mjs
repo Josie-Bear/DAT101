@@ -3,7 +3,8 @@ import { printOut, newLine } from "../../common/script/utils.mjs";
 
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
-
+const time = new Date();
+printOut(time.toLocaleString("no-NB", {timeZone: "Europe/Oslo"}));
 printOut(newLine);
 
 printOut("--- Part 2 ----------------------------------------------------------------------------------------------");

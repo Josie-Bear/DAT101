@@ -1,5 +1,5 @@
 "use strict";
-import { printOut, newLine } from "../../common/script/utils.mjs";
+import { newLine, printOut } from "../../common/script/utils.mjs";
 
 printOut("--- Part 1 ----------------------------------------------------------------------------------------------");
 /* Put your code below here!*/
@@ -75,19 +75,19 @@ printOut("--- Part 6 -----------------------------------------------------------
 
 printOut("Grades of the students:")
 let grade = "";
-for (let i = 0; i < 5; i++){
+for (let i = 0; i < 5; i++) {
     let grade = (Math.floor(Math.random() * 236) + 1) / 236 * 100;
-    if(grade >= 89){
+    if (grade >= 89) {
         printOut(`Grade A`)
-    }else if(grade >= 77){
+    } else if (grade >= 77) {
         printOut(`Grade B`)
-    }else if(grade >=65){
+    } else if (grade >= 65) {
         printOut(`Grade C`)
-    }else if(grade >= 53){
+    } else if (grade >= 53) {
         printOut(`Grade D`)
-    }else if(grade >= 41){
+    } else if (grade >= 41) {
         printOut(`Grade E`)
-    }else{
+    } else {
         printOut(`Grade F`)
     }
 }
@@ -95,33 +95,90 @@ for (let i = 0; i < 5; i++){
 printOut(grade);
 
 printOut("--- Part 7 ----------------------------------------------------------------------------------------------");
+let throwCount = 0;
+let hasStraight = false;
+let hasTower = false;
+let has3Pairs = false;
+let hasYatzy = false;
 
-const d1 = Math.floor(Math.random() * 6) + 1;
-const d2 = Math.floor(Math.random() * 6) + 1;
-const d3 = Math.floor(Math.random() * 6) + 1;
-const d4 = Math.floor(Math.random() * 6) + 1;
-const d5 = Math.floor(Math.random() * 6) + 1;
-const d6 = Math.floor(Math.random() * 6) + 1;
+do {
+    const d1 = Math.floor(Math.random() * 6) + 1;
+    const d2 = Math.floor(Math.random() * 6) + 1;
+    const d3 = Math.floor(Math.random() * 6) + 1;
+    const d4 = Math.floor(Math.random() * 6) + 1;
+    const d5 = Math.floor(Math.random() * 6) + 1;
+    const d6 = Math.floor(Math.random() * 6) + 1;
 
-const diceThrow = `${d1}${d2}${d3}${d4}${d5}${d6}`;
-printOut(diceThrow);
-let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0;
-for(let i = 0; i < 6; i++){
-    const c = diceThrow.charAt(i);
-    if(c === "1"){
-        c1++;
-    }else if(c === "2"){
-        c2++;
-    }else if(c === "3"){
-        c3++;
-    }else if(c === "4"){
-        c4++;
-    }else if(c === "5"){
-        c5++;
-    }else{
-        c6++;
+    const diceThrow = `${d1}${d2}${d3}${d4}${d5}${d6}`;
+    throwCount++;
+
+    let c1 = 0, c2 = 0, c3 = 0, c4 = 0, c5 = 0, c6 = 0;
+    for (let i = 0; i < 6; i++) {
+        const c = diceThrow.charAt(i);
+        if (c === "1") {
+            c1++;
+        } else if (c === "2") {
+            c2++;
+        } else if (c === "3") {
+            c3++;
+        } else if (c === "4") {
+            c4++;
+        } else if (c === "5") {
+            c5++;
+        } else {
+            c6++;
+        }
     }
-}
-const diceCount = `${c1}${c2}${c3}${c4}${c5}${c6}`
-printOut(diceCount);
+    const diceCount = `${c1}${c2}${c3}${c4}${c5}${c6}`
 
+    let a1 = 0, a2 = 0, a3 = 0, a4 = 0, a5 = 0, a6 = 0;
+    for (let i = 0; i < 6; i++) {
+        const c = diceCount.charAt(i);
+        if (c === "1") {
+            a1++;
+        } else if (c === "2") {
+            a2++;
+        } else if (c === "3") {
+            a3++;
+        } else if (c === "4") {
+            a4++;
+        } else if (c === "5") {
+            a5++;
+        } else if (c === "6") {
+            a6++;
+        }
+    }
+
+    const amount = `${a1}${a2}${a3}${a4}${a5}${a6}`
+
+    if (amount.includes("6") === true) {
+        if (hasStraight === false) {
+            hasStraight = true;
+            printOut("---Straight---");
+            printOut({ diceThrow, throwCount });
+            printOut("---");
+        }
+    } else if (amount === "010100") {
+        if (hasTower === false) {
+            hasTower = true;
+            printOut("---Tower---");
+            printOut({ diceThrow, throwCount });
+            printOut("---");
+        }
+    } else if (amount === "030000") {
+        if (has3Pairs === false) {
+            has3Pairs = true;
+            printOut("---3 Pairs---");
+            printOut({ diceThrow, throwCount });
+            printOut("---");
+        }
+    } else if (amount === "000001") {
+        if (hasYatzy === false) {
+            hasYatzy = true;
+            printOut("---YATZY---")
+            printOut({ diceThrow, throwCount });
+            printOut("---");
+        }
+    }
+
+} while (hasStraight === false || hasTower === false || has3Pairs === false || hasYatzy === false);
